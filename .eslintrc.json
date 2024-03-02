@@ -1,0 +1,13 @@
+{
+    "plugins": [
+      "react",
+      "react-hooks",
+      "jsx-a11y"
+    ],
+    "extends": [
+      "react-app"
+    ],
+    "rules": {
+      // Add any custom rules here
+    }
+  }
