@@ -1,6 +1,7 @@
 const getTableData = (req, res, db) => {
     db.select('*').from('public.test')
       .then(items => {
+        console.log("ITEMS ARE COMING")
         if(items.length){
           res.json(items)
         } else {

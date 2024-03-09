@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap'; 
+import RadarChart from './RadarChart';
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -8,10 +9,14 @@ const App = () => {
 
   const getItems = () => {
     fetch('http://localhost:5000/crud')
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
       .then((data) => setItems(data))
       .catch((error) => console.log(error));
   };
+  
 
   const addItemToState = (item) => {
     setItems((prevItems) => [...prevItems, item]);
@@ -78,8 +83,18 @@ const App = () => {
   };
 
   useEffect(() => {
-    getItems();
+    const fetchData = async () => {
+      try {
+        const itemsget = await getItems();
+        console.log("ITEMS", itemsget);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
   }, []);
+  
 
   return (
     <Container className="App">
@@ -129,9 +144,18 @@ const App = () => {
           </table>
         </Col>
       </Row>
+
+      <Row>
+        <Col>
+          <RadarChart/>
+        </Col>
+      </Row>
   
     </Container>
   );
 };
 
 export default App;
+
+
+// LISTEN, I HAVE ADDED TABLE ON A PAGE AND IT IS REPRESENTING DATA IN TABULAR FORM. 

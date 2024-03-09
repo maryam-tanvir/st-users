@@ -19,36 +19,31 @@ var db = require('knex')({
     password : 'stocktrader',
     database : 'postgres'
   }
-})
-
-console.log("connecting to database")
+});
 
 // Controllers - aka, the db queries
-const main = require('./Controllers/main')
+const main = require('./src/components/Users/Controllers/main')
 
 // App
 const app = express()
 
 
 // app.use(helmet())
-// app.use(cors({
-//   credentials:true,
-//   origin:["http://localhost:3000"]
-// }))
-app.use(cors());
+app.use(cors({
+  credentials:true,
+  origin:["http://localhost:3000"]
+}))
 app.use(bodyParser.json())
 app.use(morgan('combined')) // use 'tiny' or 'combined'
 
 // App Routes - Auth
 
-app.get('/crud', (req, res) => {
-  console.log('GET /crud was called!')
-  console.log("ITEMS ARE COMING")
-  main.getTableData(req, res, db)})
+app.get('/crud', (req, res) => main.getTableData(req, res, db))
 app.post('/crud', (req, res) => main.postTableData(req, res, db))
 app.put('/crud', (req, res) => main.putTableData(req, res, db))
 app.delete('/crud', (req, res) => main.deleteTableData(req, res, db))
 
+// App Server Connection
 app.listen(5000, () => {
   console.log(`app is running on port ${process.env.PORT || 3000}`)
 })
