@@ -136,6 +136,7 @@ import ChartsScatter from "../pages/Charts/ChartsScatter";
 import ChartsTimeline from "../pages/Charts/ChartsTimeline";
 import ChartsTreemap from "../pages/Charts/ChartsTreemap";
 import TechRadar from "src/pages/AllCharts/TechRadar/techRadar";
+import DynamicTechRadar from "src/pages/AllCharts/DynamicTechRadar/DynamicTechRadar";
 import UsersApp from "src/pages/AllCharts/User2/users";
 
 //Icons
@@ -261,6 +262,7 @@ const userRoutes: Array<RouteProps> = [
   { path: "/charts-timeline", component: <ChartsTimeline/> },
   { path: "/charts-treemap", component: <ChartsTreemap/> },
   { path: "/tech-radar", component: <TechRadar /> },
+  { path: "/dynamic-tech-radar", component: <DynamicTechRadar /> },
 
  
  

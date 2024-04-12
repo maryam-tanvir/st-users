@@ -815,6 +815,12 @@ const menuItems: Array<MenuItemsProps> = [
                 link: "/tech-radar",
                 parentId: 107
             },
+            {
+                id: 143,
+                label: "Dynamic Tech Radar",
+                link: "/dynamic-tech-radar",
+                parentId: 107
+            },
 
         ]
     },
