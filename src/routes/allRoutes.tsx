@@ -138,6 +138,8 @@ import ChartsTreemap from "../pages/Charts/ChartsTreemap";
 import TechRadar from "src/pages/AllCharts/TechRadar/techRadar";
 import DynamicTechRadar from "src/pages/AllCharts/DynamicTechRadar/DynamicTechRadar";
 import UsersApp from "src/pages/AllCharts/User2/users";
+import LeadsAnalysis from "src/pages/AllCharts/leadAnalysis/leadAnalysis";
+import DataVisualization from "src/pages/AllCharts/datavisualization/datavisualization";
 
 //Icons
 import IconUnicon from "../pages/Icons/IconUnicon";
@@ -168,6 +170,7 @@ interface RouteProps {
 const userRoutes: Array<RouteProps> = [
   //dashboard
   { path: "/usersapp", component: <UsersApp/> },
+  { path: "/leadanalysis", component: <LeadsAnalysis/> },
   { path: "/sales", component: <Sales /> },
   { path: "/dashboards-analytics", component: <Analytics /> },
   { path: "/calendar", component: <Calendar /> },
@@ -263,6 +266,7 @@ const userRoutes: Array<RouteProps> = [
   { path: "/charts-treemap", component: <ChartsTreemap/> },
   { path: "/tech-radar", component: <TechRadar /> },
   { path: "/dynamic-tech-radar", component: <DynamicTechRadar /> },
+  { path: "/data-vizualization", component: <DataVisualization /> },
 
  
  

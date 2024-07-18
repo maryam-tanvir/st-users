@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'reactstrap'; // Assuming you're using Reactstrap
-import LineChart from './Component/LineChart';
+import LineGraph from './Components/LineGraph';
 
 const App = () => {
   // State variables for data and editing
@@ -55,10 +55,10 @@ const App = () => {
     <Container className="App">
       <Row>
         <Col>
-          <h1 style={{ margin: '20px 0' }}>Leads Analysis</h1>
+          <h1 style={{ margin: '20px 0' }}>Data Vizualization - Line Graph </h1>
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col>
           {isLoading && <p>Loading data...</p>}
           {items.length > 0 && (
@@ -98,10 +98,10 @@ const App = () => {
             </table>
           )}
         </Col>
-      </Row>
+      </Row> */}
       <Row>
       <Col>
-        <LineChart data={items} /> {/* Pass data as props to LineChart */}
+        <LineGraph data={items} /> {/* Pass data as props to LineChart */}
       </Col>
     </Row>
     </Container>

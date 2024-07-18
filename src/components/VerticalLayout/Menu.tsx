@@ -928,18 +928,45 @@ const menuItems: Array<MenuItemsProps> = [
     {
         "id": 139,
         "novidade": false,
-        "label": "Users",
+        "label": "Leads Analysis",
         "icon": "user",
         "link": "../Users/users.tsx",
         "subItems": [
             {
                 id: 142,
-                label: "Users",
+                label: "Leads Analysis",
                 link: "/usersapp",
                 parentId: 139
             },
+            {
+                id: 143,
+                label: "Leads Analysis II",
+                link: "/leadanalysis",
+                parentId: 139
+            },
         ]
-    }
+    },
+    {
+        "id": 144,
+        "novidade": false,
+        "label": "Data Visualization",
+        "icon": "user",
+        "link": "../Users/users.tsx",
+        "subItems": [
+            {
+                id: 145,
+                label: "Line Graph",
+                link: "/data-vizualization",
+                parentId: 144
+            },
+            {
+                id: 146,
+                label: "Tech Radar Graph",
+                link: "/leadanalysis",
+                parentId: 144
+            },
+        ]
+    },
 ];
 
 export { menuItems };
