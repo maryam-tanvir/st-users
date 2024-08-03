@@ -962,7 +962,7 @@ const menuItems: Array<MenuItemsProps> = [
             {
                 id: 146,
                 label: "Tech Radar Graph",
-                link: "/leadanalysis",
+                link: "/data-vizualization-2",
                 parentId: 144
             },
         ]
