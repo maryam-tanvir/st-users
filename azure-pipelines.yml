@@ -1,0 +1,27 @@
+trigger:
+- main  # or your branch name
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  # Variables for the EC2 instance
+  EC2_HOST: '34.203.90.103'
+  EC2_USER: 'ec2-user'
+  EC2_KEY: '$(ec2Key)'  # Secure file containing your SSH private key
+
+steps:
+- task: DownloadSecureFile@1
+  name: sshKey
+  inputs:
+    secureFile: 'my-react-key4.pem'
+
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'stock_trader_app'
+    commands: |
+      echo "Running commands on EC2 instance"
+      ./my_script.sh
+      echo "Script Ran"  # Added for verification
+      
+      # More commands as needed
