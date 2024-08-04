@@ -22,6 +22,6 @@ steps:
     commands: |
       echo "Running commands on EC2 instance"
       ./my_script.sh
-      echo "Script Ran "  # Added for verification
+      echo "Script Ran Successfully "  # Added for verification
       
       # More commands as needed
