@@ -13,7 +13,8 @@ variables:
 steps:
 - task: DownloadSecureFile@1
   name: sshKey
-  
+  inputs:
+    secureFile: 'my-react-key4.pem'
 
 - task: SSH@0
   inputs:
