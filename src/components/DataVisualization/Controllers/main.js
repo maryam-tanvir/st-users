@@ -1,5 +1,5 @@
 const getTableData = (req, res, db) => {
-    db.select('*').from('war.summary')
+    db.select('*').from('war_clone.summary')
       .then(items => {
         if(items.length){
           res.json(items)
@@ -13,7 +13,7 @@ const getTableData = (req, res, db) => {
   const postTableData = (req, res, db) => {
     const { summary_id, battle_date, profit_and_loss} = req.body
     const added = new Date()
-    db('war.summary').insert({summary_id, battle_date, profit_and_loss, added})
+    db('war_clone.summary').insert({summary_id, battle_date, profit_and_loss, added})
       .returning('*')
       .then(item => {
         res.json(item)
@@ -23,7 +23,7 @@ const getTableData = (req, res, db) => {
   
   const putTableData = (req, res, db) => {
     const { summary_id, battle_date, profit_and_loss} = req.body
-    db('war.summary').where({summary_id}).update({summary_id, battle_date, profit_and_loss})
+    db('war_clone.summary').where({summary_id}).update({summary_id, battle_date, profit_and_loss})
       .returning('*')
       .then(item => {
         res.json(item)
@@ -33,7 +33,7 @@ const getTableData = (req, res, db) => {
   
   const deleteTableData = (req, res, db) => {
     const { summary_id } = req.body
-    db('war.summary').where({summary_id}).del()
+    db('war_clone.summary').where({summary_id}).del()
       .then(() => {
         res.json({delete: 'true'})
       })
