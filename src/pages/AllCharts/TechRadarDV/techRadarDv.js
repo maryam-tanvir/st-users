@@ -198,9 +198,7 @@ function App() {
                 <div className="chart-container">
                     <RadarTimer {...setup1} data={filteredData1} animate={isPlaying1} />
                 </div>
-            </div>
 
-            <div className="App">
                 <div className="dropdown-container">
                     <select onChange={(e) => setSelectedDate2(e.target.value)} value={selectedDate2} disabled={isPlaying2}>
                         <option value="">Select Battle Date</option>
@@ -218,6 +216,7 @@ function App() {
                     <RadarTimer {...setup2} data={filteredData2} animate={isPlaying2} />
                 </div>
             </div>
+            
         </div> 
     );
 }
