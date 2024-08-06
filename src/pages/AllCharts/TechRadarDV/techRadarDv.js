@@ -23,17 +23,17 @@ function App() {
     useEffect(() => {
         const fetchData1 = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/data');
+                const response = await fetch('${process.env.REACT_APP_API_URL}/api/data');
                 const data = await response.json();
 
                 console.log('Fetched data from api/data:', data);
 
                 if (Array.isArray(data)) {
                     const uniqueBattleDates = [...new Set(data.map(item => item.battle_date.split('T')[0]))];
-                    const quadrants = [...new Set(data.map(item => `Lead${item.lead_id}`))];
+                    const sectors = [...new Set(data.map(item => item.sector))]; 
                     const mappedData = data.map(item => ({
                         name: `Unit ${item.unit_assignment_id}`,
-                        quadrant: `Lead${item.lead_id}`,
+                        quadrant: item.sector,
                         ring: determineRing(parseFloat(item.percentageprofitandloss)),
                         percentageprofitandloss: item.percentageprofitandloss,
                         profit_and_loss: item.profit_and_loss,
@@ -46,7 +46,7 @@ function App() {
                     setBattleDates1(uniqueBattleDates);
                     setSetup1({
                         rings: ['-50,0', '0-5', '5-10', 'above 10'],
-                        quadrants: quadrants,
+                        quadrants: sectors,
                         data: mappedData
                     });
                 } else {
@@ -86,17 +86,17 @@ function App() {
     useEffect(() => {
         const fetchData2 = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/dataa');
+                const response = await fetch('${process.env.REACT_APP_API_URL}/api/dataa');
                 const data = await response.json();
 
                 console.log('Fetched data from api/dataa:', data);
 
                 if (Array.isArray(data)) {
                     const uniqueBattleDates = [...new Set(data.map(item => item.battle_date.split('T')[0]))];
-                    const quadrants = [...new Set(data.map(item => `Lead${item.lead_id}`))];
+                    const sectors = [...new Set(data.map(item => item.sector))];
                     const mappedData = data.map(item => ({
                         name: `Unit ${item.unit_assignment_id}`,
-                        quadrant: `Lead${item.lead_id}`,
+                        quadrant: item.sector, 
                         ring: determineRing(parseFloat(item.percentageprofitandloss)),
                         percentageprofitandloss: item.percentageprofitandloss,
                         profit_and_loss: item.profit_and_loss,
@@ -109,7 +109,7 @@ function App() {
                     setBattleDates2(uniqueBattleDates);
                     setSetup2({
                         rings: ['-50,0', '0-5', '5-10', 'above 10'],
-                        quadrants: quadrants,
+                        quadrants: sectors,
                         data: mappedData
                     });
                 } else {
@@ -179,6 +179,10 @@ function App() {
         }
     };
 
+    console.log('Setup1 quadrants:', setup1.quadrants);
+console.log('Setup2 quadrants:', setup2.quadrants);
+
+
     return (
         <div style={{ marginTop: '100px', marginLeft: '50px'}}>
             <div className="App">
@@ -198,7 +202,9 @@ function App() {
                 <div className="chart-container">
                     <RadarTimer {...setup1} data={filteredData1} animate={isPlaying1} />
                 </div>
+            </div>
 
+            <div className="App">
                 <div className="dropdown-container">
                     <select onChange={(e) => setSelectedDate2(e.target.value)} value={selectedDate2} disabled={isPlaying2}>
                         <option value="">Select Battle Date</option>
@@ -216,7 +222,6 @@ function App() {
                     <RadarTimer {...setup2} data={filteredData2} animate={isPlaying2} />
                 </div>
             </div>
-            
         </div> 
     );
 }

@@ -8,6 +8,7 @@ const MAX_COLLISION_RETRY_COUNT = 350;
 const TOLERANCE_CONSTANT = 6;
 const DEFAULT_WIDTH = 700;
 const RADIUS_DIMINISH_CONSTANT = 1.5;
+const TOP_MARGIN = 50; // Add a constant for the top margin
 
 function RadarTimer(props) {
     const width = props.width || DEFAULT_WIDTH;
@@ -58,9 +59,9 @@ function RadarTimer(props) {
             }
 
             const blip = {
-                id: `${entry.unit_assignment_id}-${entry.quadrant}-${entry.ring}`,
+                id: `${entry.unit_assignment_id}-${entry.quadrant}-${entry.ring}`, // Unique identifier
                 name: `Unit ${entry.unit_assignment_id}`,
-                quadrant: `Lead${entry.quadrant}`,
+                quadrant: entry.quadrant, // Use sector as quadrant
                 x: coordinates.x,
                 y: coordinates.y,
                 percentageprofitandloss: entry.percentageprofitandloss,
@@ -146,10 +147,10 @@ function RadarTimer(props) {
     console.log('Processed Data for Quadrant:', processedData);
 
     return (
-        <RadarContents width={width} height={width} key={refreshKey}>
-            <g transform={`translate(${width / 2},${width / 2})`}>
+        <RadarContents width={width} height={width + TOP_MARGIN} key={refreshKey}>
+            <g transform={`translate(${width / 2},${(width / 2) + TOP_MARGIN})`}>
                 {props.quadrants.map((quadrant, index) => {
-                    const filteredPoints = processedData.filter((value) => value.quadrant === `Lead${quadrant}`);
+                    const filteredPoints = processedData.filter((value) => value.quadrant === quadrant);
 
                     console.log(`Quadrant ${quadrant}:`, filteredPoints);
 
@@ -165,7 +166,7 @@ function RadarTimer(props) {
                             angle={angle}
                             name={quadrant}
                             radiusDiminish={radiusDiminishConstant}
-                            animate={props.animate} 
+                            animate={props.animate} // Pass the animate prop
                         />
                     );
                 })}
@@ -182,7 +183,7 @@ RadarTimer.propTypes = {
     margin: PropTypes.number,
     radiusDiminish: PropTypes.number,
     fontSize: PropTypes.number,
-    animate: PropTypes.bool
+    animate: PropTypes.bool // Add the animate prop type
 };
 
 export default RadarTimer;

@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
-import {RadarContents} from "./Radar.style";
+import React, { useContext, useState, useEffect } from 'react';
+import { RadarContents } from "./Radar.style";
 import PropTypes from 'prop-types';
 
 import Quadrant from "../Quadrant/Quadrant";
-import {getColorScale, ThemeContext} from "../theme-context";
+import { getColorScale, ThemeContext } from "../theme-context";
 
 //when point coordinates are calculated randomly, sometimes point coordinates
 // get so close that it would be hard to read the textual part. When such
@@ -29,13 +29,13 @@ function Radar(props) {
     const width = props.width || DEFAULT_WIDTH;
     const rings = props.rings || [""];
     const radiusDiminishConstant = props.radiusDiminish || RADIUS_DIMINISH_CONSTANT;
-    const data = props.data || [];
+    const [data, setData] = useState(props.data || []);
     if (data.length === 0) {
         console.log("No Data Provided")
     }
 
     //context variables
-    const {fontSize, fontFamily, colorScale} = useContext(ThemeContext);
+    const { fontSize, fontFamily, colorScale } = useContext(ThemeContext);
 
     //margin of radar
     const margin = props.margin || 5;
@@ -47,6 +47,16 @@ function Radar(props) {
     const toleranceX = width / rings.length / 100 * TOLERANCE_CONSTANT * 4;
     const toleranceY = (props.fontSize || fontSize);
 
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    useEffect(() => {
+        setData(props.data || []);
+    }, [props.data]);
+
+    const refreshData = () => {
+        setRefreshKey(prevKey => prevKey + 1);
+    };
+
     //console.log("Collision Tolerance (Pixels):");
     //console.log("x: " + toleranceX);
     //console.log("y: " + toleranceY);
@@ -54,13 +64,15 @@ function Radar(props) {
     //given the ring and quadrant of a value,
     //calculates x and y coordinates
     const processRadarData = (quadrants, rings, data) => {
-
-        //order by rings. this will result in better collision
-        //detection performance since it is harder to relocate
-        // the points in the core ring
-        data.sort(function (a, b) {
-            return rings.indexOf(a.ring) - rings.indexOf(b.ring);
-        });
+        // Ensure data is an array
+        if (!Array.isArray(data)) {
+            console.error("Data is not an array");
+            return [];
+        }
+    
+        // Order by rings
+        data.sort((a, b) => rings.indexOf(a.ring) - rings.indexOf(b.ring));
+    
 
         let collisionCount = 0;
 
@@ -108,7 +120,7 @@ function Radar(props) {
         const polarToCartesian = (r, t) => {
             const x = r * Math.cos(t);
             const y = r * Math.sin(t);
-            return {x: x, y: y};
+            return { x: x, y: y };
         };
 
         const getPositionByQuadrant = (radiusArray) => {
@@ -204,17 +216,15 @@ function Radar(props) {
             itemFontSize: props.itemFontSize || props.fontSize || fontSize,
             fontFamily: props.fontFamily || fontFamily,
             colorScale: props.colorScaleIndex ? getColorScale(props.colorScaleIndex) : colorScale,
-            quadrantsConfig : props.quadrantsConfig || {}
+            quadrantsConfig: props.quadrantsConfig || {}
         }}>
             <RadarContents
                 width={width * RIGHT_EXTENSION}
                 height={width}
-                style={{margin: margin}}
+                style={{ margin: margin }}
             >
                 <g transform={"translate(" + width / 2 + "," + width / 2 + ")"}>
                     {props.quadrants.map((value, index) => {
-
-                        //get points that belong to this quadrant
                         const filteredPoints = points.filter((element) => element.quadrant === value);
 
                         return (
@@ -229,14 +239,15 @@ function Radar(props) {
                                     angle={angle}
                                     name={value}
                                     radiusDiminish={radiusDiminishConstant}
+                                    key={refreshKey} // Key for forcing re-render on data change
                                 />
                             </g>)
                     })}
                 </g>
             </RadarContents>
+            <button onClick={refreshData}>Refresh Data</button>
         </ThemeContext.Provider>
     );
-
 }
 
 Radar.propTypes = {

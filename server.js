@@ -48,21 +48,28 @@ app.get('/api/data', async (req, res) => {
   try {
       const query = `
           SELECT 
-              p.performance_id,
-              p.unit_assignment_id,
-              p.profit_and_loss,
-              p.battle_date,
-              p.lead_id,
-              p.percentageprofitandloss,
-              d.start_date,
-              d.end_date,
-              d.status
-          FROM 
-              war.performance p
-          LEFT JOIN 
-              war.deployment d ON p.unit_assignment_id = d.unit_assignment_id
-          LEFT JOIN 
-              war.allocation a ON d.deployment_id = a.deployment_id
+                p.performance_id,
+                p.unit_assignment_id,
+                p.profit_and_loss,
+                p.battle_date,
+                p.lead_id,
+                p.percentageprofitandloss,
+                d.start_date,
+                d.end_date,
+                d.status,
+                l.stock_name,
+                f.ticker,
+                f.sector
+            FROM 
+                war.performance p
+            LEFT JOIN 
+                war.deployment d ON p.unit_assignment_id = d.unit_assignment_id
+            LEFT JOIN 
+                war.allocation a ON d.deployment_id = a.deployment_id
+            LEFT JOIN 
+                war.leads l ON p.lead_id = l.leads_id
+            LEFT JOIN 
+                stocktrader.fortune_1000 f ON l.stock_name = f.ticker
       `;
 
       const data = await db.raw(query);
@@ -92,21 +99,28 @@ app.get('/api/dataa', async (req, res) => {
   try {
       const query = `
           SELECT 
-              p.performance_id,
-              p.unit_assignment_id,
-              p.profit_and_loss,
-              p.battle_date,
-              p.lead_id,
-              p.percentageprofitandloss,
-              d.start_date,
-              d.end_date,
-              d.status
-          FROM 
-              war_clone.performance p
-          LEFT JOIN 
-              war_clone.deployment d ON p.unit_assignment_id = d.unit_assignment_id
-          LEFT JOIN 
-              war_clone.allocation a ON d.deployment_id = a.deployment_id
+                p.performance_id,
+                p.unit_assignment_id,
+                p.profit_and_loss,
+                p.battle_date,
+                p.lead_id,
+                p.percentageprofitandloss,
+                d.start_date,
+                d.end_date,
+                d.status,
+                l.stock_name,
+                f.ticker,
+                f.sector
+            FROM 
+                war_clone.performance p
+            LEFT JOIN 
+                war_clone.deployment d ON p.unit_assignment_id = d.unit_assignment_id
+            LEFT JOIN 
+                war_clone.allocation a ON d.deployment_id = a.deployment_id
+            LEFT JOIN 
+                war_clone.leads l ON p.lead_id = l.leads_id
+            LEFT JOIN 
+                stocktrader.fortune_1000 f ON l.stock_name = f.ticker
       `;
 
       const data = await db.raw(query);
